@@ -4,4 +4,8 @@ from login import login
 
 
 def main():
-    pass
+    with chrome:
+        login(chrome)
+
+
+main()
