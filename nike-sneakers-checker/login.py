@@ -5,18 +5,18 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-def get_inputs_by_types(browser, types: list[str], names=None):
-    # TODO make it as filter?
-
+def get_log_in_inputs(browser):
     result = [
         e for e in browser.find_elements(By.TAG_NAME, value='input')
-        if e.get_attribute('type') in types
+        if e.get_attribute('type') in ['email', 'password']
     ]
 
-    if names:
-        return [e for e in result if e.get_attribute('name') in names]
+    e1, e2 = result
 
-    return result
+    if e1.get_attribute('type') == 'email':
+        return e1, e2
+
+    return e2, e1
 
 
 def login(browser):
@@ -31,7 +31,7 @@ def login(browser):
 
     wait.until(lambda p: p.find_element(By.ID, value=LoginAttrs.NIKE_ENTER_FORM_ID.value))
 
-    nike_login, nike_password = get_inputs_by_types(browser, types=['email', 'password'])
+    nike_login, nike_password = get_log_in_inputs(browser)
 
     nike_login.send_keys(config.NIKE_SITE_LOGIN)
     nike_password.send_keys(config.NIKE_SITE_PASSWORD)
