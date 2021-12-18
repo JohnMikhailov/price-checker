@@ -2,7 +2,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
 from app.config import config
-from excpetions import DrawingError
+from excpetions import DrawError
+from enums import DrawAttrs
 
 
 def get_first_available_biggest_size(browser):
@@ -11,7 +12,7 @@ def get_first_available_biggest_size(browser):
         (
             size for size in all_list_items
             if (config.NIKE_SNEAKERS_SIZE_PATTERN.upper() in size.text
-                and size.get_attribute('data-qa') == 'size-available')
+                and size.get_attribute('data-qa') == DrawAttrs.DATA_QA_SIZE_AVAILABLE.value)
         ),
         key=lambda x: x.text,
         reverse=True
@@ -41,9 +42,9 @@ def play(browser):
 
     available_size = get_first_available_biggest_size(browser)
     if not available_size:
-        raise DrawingError('No available sizes')
+        raise DrawError('No available sizes')
 
     available_size.click()
 
-    buy_button = browser.find_element(By.CLASS_NAME, value='mb6-sm.prl0-lg.fs14-sm')
+    buy_button = browser.find_element(By.CLASS_NAME, value=DrawAttrs.BUY_BUTTON_CLASS_NAME.value)
     buy_button.click()

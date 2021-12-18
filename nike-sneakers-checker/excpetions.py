@@ -1,5 +1,5 @@
 from app.exceptions import AppError
 
 
-class DrawingError(AppError):
+class DrawError(AppError):
     pass
