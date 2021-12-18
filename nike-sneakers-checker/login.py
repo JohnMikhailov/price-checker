@@ -21,7 +21,7 @@ def get_log_in_inputs(browser):
 
 def login(browser):
     # TODO close unpredictable popups
-    browser.get(config.NIKE_SITE_URL)
+    browser.get(config.SITE_URL)
 
     wait = WebDriverWait(browser, timeout=config.MAX_WAIT_ELEMENT_APPEARANCE_SEC)
     wait.until(lambda p: p.find_element(By.CLASS_NAME, value=LoginAttrs.ENTER_BUTTON_CLASS_NAME.value))
